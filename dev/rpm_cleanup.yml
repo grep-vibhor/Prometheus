@@ -1,0 +1,94 @@
+- hosts: QAD
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+    ########################PREPARING ANSIBLE REPORT TO SEND TO MAIL######################
+    - command: truncate -s 0 ./ip
+      become: false
+      delegate_to: localhost
+    - command: truncate -s 0 ./nip
+      become: false
+      delegate_to: localhost
+ 
+    - command: id
+      register: result
+      ignore_errors: yes
+    - meta: clear_host_errors
+   
+    - lineinfile:
+       path: ./nip
+       line: "{{ item }}"
+      become: false
+      with_items: "{{ inventory_hostname }}"
+      delegate_to: localhost
+      when: result.unreachable is defined
+    - lineinfile:
+       path: ./ip
+       line: "{{ item }}"
+      become: false
+      with_items: "{{ inventory_hostname }}"
+      delegate_to: localhost
+      when: result.unreachable is not defined
+    - command: dos2unix ./nip
+      become: false
+      delegate_to: localhost
+    - command: dos2unix ./report.html
+      become: false
+      delegate_to: localhost
+    - blockinfile:
+        path: ./report.html
+        insertafter: "<!--For IP-->"
+        block: |
+                   <br>{{item}}<br>
+        marker: "<!-- {mark}ANSIBLE MANAGED BLOCK {{item}}-->"
+      with_lines: cat ./ip
+      become: false
+      delegate_to: localhost
+    - blockinfile:
+        path: ./report.html
+        insertafter: "<!--For NIP-->"
+        block: |
+                  <br>{{item}}<br>
+        marker: "<!-- {mark}ANSIBLE MANAGED BLOCK {{item}}-->"
+      with_lines: cat ./nip
+      become: false
+      delegate_to: localhost
+    - command: dos2unix ./report.html
+      become: false
+      delegate_to: localhost
+
+    ######################END OF PREPARING REPORT###################
+
+    #####################CLEANUP EXECUTION########################
+    - name: Ansible copy file  
+      copy:
+        src: ./yumcleanjboss10.sh
+        dest: /opt/yodlee/
+        mode: 771
+    - name: Ansible execute the script  
+      command: 'sh /opt/yodlee/yumcleanjboss10.sh'
+    - copy:
+        src: ./cleanup.sh
+        dest: /opt/yodlee
+        mode: 771
+    - command: 'sh /opt/yodlee/cleanup.sh'
+    #################END OF CLEANUP###############################
+    
+   
+
+    - name: Send E-mail to print ansible report, attaching log file
+      mail:
+        host: 192.168.211.175
+        port: 25
+        subject: Ansible-report
+        body: "{{ lookup('file', './report.html') }}"
+        from: QA-Deployments@yodlee.com
+        subtype: html
+        to:
+        - vibhor.jain@yodlee.com
+        - msingh3@yodlee.com
+      become: false
+      run_once: true
+      delegate_to: localhost

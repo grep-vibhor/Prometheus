@@ -1,0 +1,62 @@
+- hosts: QAD
+  gather_facts: no
+  vars: 
+    ip: []
+    nip: []
+  tasks:
+    - name: Test Task
+      command: id
+      register: result
+    - meta: clear_host_errors
+    - set_fact:
+        nip: "{{ inventory_hostname }}"
+      when: result.unreachable is defined
+    - set_fact:
+        ip: "{{ inventory_hostname }}"
+      when: result.unreachable is not defined
+    - command: truncate -s 0 ./ip
+      delegate_to: localhost 
+    - command: truncate -s 0 ./nip
+      delegate_to: localhost
+    - lineinfile:
+        line: "{{ item }}"
+        dest: ./ip
+      with_items: "{{ ip }}"
+      delegate_to: localhost
+    - lineinfile:
+        line: "{{ item }}"
+        dest: ./nip
+      with_items: "{{ nip }}"
+      delegate_to: localhost
+    - blockinfile:
+        path: ./report.html
+        insertafter: "<!--For IP-->"
+        block: |   
+                   <br>{{item}}<br>
+        marker: "<!-- {mark}ANSIBLE MANAGED BLOCK {{item}}-->"
+      with_lines: cat /tmp/test_ip
+      delegate_to: localhost
+    - blockinfile:
+        path: ./report.html
+        insertafter: "<!--For NIP-->"
+        block: |
+                  <br>{{item}}<br>
+        marker: "<!-- {mark}ANSIBLE MANAGED BLOCK {{item}}-->"
+      with_lines: cat ./nip
+      delegate_to: localhost
+    - command: dos2unix ./nip
+      delegate_to: localhost
+    - command: dos2unix ./report.html
+      delegate_to: localhost
+    - name: Send e-mail to a print ansible report, attaching log file
+      mail:
+        host: 192.168.211.175
+        port: 25
+        subject: Ansible-report
+        subtype: html
+        body: "{{ lookup('file', './report.html') }}"  
+        from: QA-Deployments@yodlee.com
+        to:
+        - vibhor.jain@yodlee.com
+      run_once: true
+      delegate_to: localhost 
