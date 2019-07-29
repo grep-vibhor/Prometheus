@@ -1,0 +1,108 @@
+global:
+ smtp_smarthost: 192.168.211.175:25
+ smtp_from: 'QA-Deployments@yodlee.com'
+ smtp_auth_username: '@yodlee.com'
+ smtp_auth_password: 
+ smtp_require_tls: false
+# The root route on which each incoming alert enters.
+route:
+  # default route if none match
+  receiver: default_receiver
+
+  # The labels by which incoming alerts are grouped together. For example,
+  # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
+  # be batched into a single group.
+  # TODO:
+  group_by: ['alertname','job']
+  group_wait: 5m
+  group_interval: 5h
+  # All the above attributes are inherited by all child routes and can
+  # overwritten on each.
+  # If an alert has successfully been sent, wait 'repeat_interval' to
+  # resend them.
+  
+  routes:
+   - match:
+       alertname: Webhook
+     receiver: web
+     group_by: ['alertname']
+     group_wait: 5m
+     group_interval: 5h
+
+   - match:
+       alertname: High Disk Usage at Automation
+     receiver: alert-emailer-automation
+   - match:
+       alertname: High CPU Usage at Automation
+     receiver: alert-emailer-automation
+   - match:
+       alertname: High RAM Consumption at Automation
+     receiver: alert-emailer-automation
+    
+     
+   - match:
+       alertname: CPU_USAGE_HIGH
+     receiver: sql
+     group_by: ['alertname']
+     group_wait: 5m
+     group_interval: 24h     
+   - match:
+       alertname: RAM_USAGE_HIGH
+     receiver: sql
+     group_by: ['alertname']
+     group_wait: 5m
+     group_interval: 24h
+   - match:
+       alertname: CRITICAL_CPU_ALERT
+     receiver: critical-mail
+     group_by: ['alertname','job']
+     group_wait: 5m
+     group_interval: 2h
+   - match:
+       alertname: CRITICAL_MEMORY_ALERT
+     receiver: critical-mail
+     group_by: ['alertname','job']
+     group_wait: 5m
+     group_interval: 2h
+     
+
+receivers:
+- name: alert-emailer-automation
+  email_configs:
+  - to: 'vibhor.jain@yodlee.com'
+    send_resolved: true
+    headers:
+      Subject: '{{ .GroupLabels.alertname }}'
+  - to: 'msingh3@yodlee.com'
+    send_resolved: false
+    headers:
+      Subject: '{{ .GroupLabels.alertname }}'
+  - to: 'RKumar10@yodlee.com'
+    send_resolved: false
+    headers:
+      Subject: '{{ .GroupLabels.alertname }}'
+  - to: 'saurabh.mitra@yodlee.com'
+    send_resolved: false
+    headers:
+      Subject: '{{ .GroupLabels.alertname }}'
+
+- name: critical-mail
+  email_configs:
+  - to: 'vibhor.jain@yodlee.com'
+    send_resolved: true
+    headers:
+      Subject: '{{ .GroupLabels.alertname }} at {{ .GroupLabels.job }}'
+
+- name: web
+  webhook_configs:
+  - send_resolved: false
+    url: http://192.168.211.238:2605/clean
+- name: sql
+  webhook_configs:
+  - send_resolved: false
+    url: http://192.168.211.238:2711/trackon
+
+- name: default_receiver
+  email_configs:
+  - to: 'msingh3@yodlee.com'
+    send_resolved: true

@@ -1,0 +1,44 @@
+groups:
+ - name: example
+   rules:
+   - alert: High Disk Usage at Automation
+     expr: 100 - ((node_filesystem_avail_bytes{job="Automation",mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{job="Automation",mountpoint="/",fstype!="rootfs"}) > 85
+     for: 2h
+     annotations:
+       description: "Disk space mounted on root fs has been 85% filled(low on space)[For this IP cleanup script will be executed]"
+   - alert: High RAM Consumption at Automation
+     expr: (node_memory_MemTotal_bytes{job="Automation"} - node_memory_MemFree_bytes{job="Automation"})/node_memory_MemTotal_bytes{job="Automation"}*100 > 90
+     for: 2h
+     annotations: 
+       descrpition: "Ram Consumption is more than 90% for more than 2 hours"
+   - alert: High CPU Usage at Automation
+     expr: rate(node_cpu_seconds_total{cpu="0",mode="user",job="Automation"}[30s]) * 100 > 90
+     for: 2h
+     annotations:
+       description: "CPU Consumption is above 90% for more than 2 hours"
+   - alert: Webhook
+     expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"}) > 85
+     for: 2h
+     annotations:
+       description: "Webhook Alert For High Disk Usage and to ensure cleanup"
+   - alert: CPU_USAGE_HIGH
+     expr: rate(node_cpu_seconds_total{cpu="0",mode="user"}[30s]) * 100 > 90
+     for: 2h
+     annotations:
+       description: "CPU Usage High for 2h and  TrackON Issue raise "
+   - alert: RAM_USAGE_HIGH
+     expr: (node_memory_MemTotal_bytes - node_memory_MemFree_bytes)/node_memory_MemTotal_bytes*100 > 95
+     for: 2h
+     annotations:
+       descrpition: "Ram Consumption High for 2h and TrackON Issue raise"
+       
+   - alert: CRITICAL_CPU_ALERT
+     expr: cpu_usage > 90
+     for: 1h
+     annotations:
+       description: "CPU IS ON HIGH LOAD ON THIS INSTANCE CONTINOUSLY FOR AN HOUR"  
+   - alert: CRITICAL_MEMORY_ALERT
+     expr: memory_usage  > 90
+     for: 1h
+     annotations:
+       description: "MEMORY CONSUMPTION IS ON HIGH ON THIS INSTANCE CONTINOUSLY FOR AN HOUR" 

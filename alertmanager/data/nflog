@@ -1,0 +1,57 @@
+Ç
+¶
+v{}/{alertname="High RAM Consumption at Automation"}:{alertname="High RAM Consumption at Automation", job="Automation"}#
+alert-emailer-automationemail*ÍÙùéÒûìø2	´‘¶½ó¡ËÍˆ”êÒûìøÇ
+¶
+v{}/{alertname="High RAM Consumption at Automation"}:{alertname="High RAM Consumption at Automation", job="Automation"}#
+alert-emailer-automationemail*ÎÙùéÌã–è2	´‘¶½ó¡ËÎˆ”êÌã–èÈ
+·
+^{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="L1-feature-restart"}
+critical-mailemail*µ¯ùéïçÊ2/üÛƒ³¾Ÿ¢®³¢¸¢¹ş¯®•w¹Ë¢™éûÊÎ£Êš—×«Ä¨y«¯ˆµ‚ÇòãµŞ“êïçÊ‰
+z
+<{}/{alertname="CPU_USAGE_HIGH"}:{alertname="CPU_USAGE_HIGH"}
+sqlwebhook*±¢öé„ƒ2¦úÙ¯¼å…øâÜØ’äÌÇ¾ıôˆ Á“‡å¶ôn±Ñê„ƒ¿
+®
+T{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="Mainline"}
+critical-mailemail*ÕçùéÒŒ ’20¡ßŒ¹õÖÀ·„˜³ø…¡·²›Å÷«èÇÇõİ´6“©·œÂá”Ï¶×³²Ï…è‹rÕ–”êÒŒ ’Ç
+¶
+v{}/{alertname="High RAM Consumption at Automation"}:{alertname="High RAM Consumption at Automation", job="Automation"}#
+alert-emailer-automationemail*ĞÙùéö÷Óí2	´‘¶½ó¡ËĞˆ”êö÷Óí«
+š
+]{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="L1-feature-stable"}
+critical-mailemail*ñ‰úéêôçı2³É¤Öûµ† ‚ÚŠöì™’¤œñ¸”êêôçı¼
+«
+e{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="L1-feature-restart-wealth"}
+critical-mailemail*­ôøé«Âµõ2µ˜•üë•ú¬•æá¼Æ¡ÒˆV¨çø„âêôó­£“ê«ÂµõÅ
+´
+v{}/{alertname="High RAM Consumption at Automation"}:{alertname="High RAM Consumption at Automation", job="Automation"}!
+alert-emailer-automationemail*ĞÙùéÍâáí2	´‘¶½ó¡ËĞˆ”êÍâáí¯
+
+N{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="L3"}
+critical-mailemail*Á€úé¤Ñõ2&˜éõÂÍª¥Ô=É§³±±öŠ­aŸõ€ƒÏ—í–ø÷É†”ı°Á¯”ê¤Ñõª
+™
+\{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="MR-Stabilization"}
+critical-mailemail*Õçùé íÍ’2ç˜’‹¹ Â¹&‚ñ°€ƒôåŞÕ–”ê íÍ’ 
+
+S{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="Autosit"}
+critical-mailemail*µ¯ùé»é—2¿€öİ©Õ¥şŞùê¢ú×“KµŞ“ê»é—²
+¡
+S{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="Autonpr"}
+critical-mailemail*µ¯ùéôêá2$ÏğÉÃ³ı½‹ÚÉ€×ãø~–¼œ–‚ƒé¯Kô¹Û”¼‹Šê5µŞ“êôêáß
+Ï
+<{}/{alertname="RAM_USAGE_HIGH"}:{alertname="RAM_USAGE_HIGH"}
+sqlwebhook*ı·õéÓé±2Óÿäî×øñ¾æÁ®µ§éı îŞŸ‚øÚÒ¥ògÎ©ìî»£¼äS„å÷ˆçíŞ¬dŸìóïŞ‰çváÃ ×ùÃ®À±˜„¨Ÿİ¯ÕÍÏª¢ŞàÅÇá§’õäÊ§­””’ŸÂ€³àõHè¡È¥‘ŸşÅ¿ãµèÜ¾¦"Ì“ÆÊ¥×æÊÇŸÅá…‡˜ÌËhş…ï·İó¨ôˆãäÊ‰Ñ†ú‘„¬ˆõÙñÃ“­¯–Í¶µ¦ê²æ„›­¸Ò‰qšä¿«àğ‹‰ƒÖâ’ÿ·úÎÓ˜÷“’îÚ‚‡tâÚâ…Ä‚Çä(Õ¿¤üŒı«¤æ›İî÷ƒÎ•ró½ƒò¹û°¯Ò»´ÀÙ¯“Ñ}¥Ó£ê÷Ù›%¦Ñæê‘ûà´¥¯¥ö¼Øìÿø¹ø¯š™¾Òç
+—¾‡ı¿£òÉìÂöşÌâÇ¾¯æß¼ï‹‡&¢¶Ÿ“Ã“ÃÀ‡®”©¾Á³œ­“¯èõÜÃ™ë†‘Õ±Š‘‹—ÛÖø×öî˜2èíÂ·´Õ½7ÈÏ¯†Ø‡öøìØ™ğÀ¶’¤~§ÌÌÀ…¬×Ãë¨Ø¶•Ù×†øÏšµ€ Æéç}­µüèİ¾¯y—”¶ïŸ†éÎáè‰§ÈŞæï÷€˜™¥”¸ñ€:Ñ†…ß–Õš§ä¥ˆø‘³å¢¿ÑõçÆçÔıÛçŞÎÓñÿ«úJ­¨Ø§“ª·Í`¹´‰éï™è•¤İ•³À–îÕüå¶¾¸ê‰È±ÆËØÔ­ºíÏ¶õ¢ã†¼€ğøÖìÑïŒÎÒä©ºĞ…Îú´wé©õ™…Òú :©ì£Ó‚õÌ†FöÀ·ÑİƒúÒê…¤ÎºâëùıæêÓé±•
+„
+Q{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="infra"}
+critical-mailemail*•èøé×‡öñ2	÷¿Äì‡·’Ö^•—“ê×‡öñ¡
+
+\{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="Nextgen-fincheck"}
+critical-mailemail*Õçùéíô’2
+½«ı“÷ÁÍûÊÕ–”êíô’¤
+“
+V{}/{alertname="CRITICAL_CPU_ALERT"}:{alertname="CRITICAL_CPU_ALERT", job="L2-Release"}
+critical-mailemail*Õçùé÷ã·“2€óŸıËĞÅ(ÊõŠ¬Ÿ©ñãÕ–”ê÷ã·“Œ
+û
+.{}/{alertname="Webhook"}:{alertname="Webhook"}
+webwebhook*Õ…úéì€¦”2ªÇÆ—íãŸš‹5¬ë¬Âıö÷®Œ³Äø¥£ü»­ Şìü¤ÜÃÙìÄò£‡—½¦–ÂéüÚÕÅú®¿À§©Áİò¹RÉ„ñŞí”Èê‰±úìîç—éÆúçØú–±âÁŒûÖ¿œŒéÅßw¿¾Ëï§‚´ˆÆ”“‚¥ÕŠ£ÃnªÁàÙ¨ñôÙ€¡²–ñÚÙ¿ˆÖ‚¤±Ğ‘ö²·ï¿¢Ñªå›¹€–°šç›5¢†¢œÌòİó±Œãşô¡İ•ª ÊÁÕÎĞ»İÆÇ¿àåÌ‹òÎ©õ——ŒóÔ±ó–\Öı”ÙßËÆş§œ„åòÅËÄª’Ãã²ëõæ à~ô”úëÛé°èÖª¶Ş½ø¨€TåÓ—üÆ‘‘DØÃÄşç“æ­{ø•¡Úç©åÚ‡Õ´”êì€¦”

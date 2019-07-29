@@ -1,0 +1,580 @@
+global:
+  scrape_interval: 15s # Scrape targets every 15 seconds
+  scrape_timeout: 15s # Timeout after 15 seconds
+
+  # Attach the label monitor=dev-monitor to all scraped time series scraped by this server
+  # labels:
+  #   monitor: 'dev-monitor'
+
+################## ALERTMANAGER  CONFIGURATION ######################
+# <Edited By Vibhor>
+#Alertmanger Configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 192.168.211.238:9093
+
+rule_files:
+  - "alert-rules.yml"
+  #- "test-rules.yml"
+
+###################################################################
+
+scrape_configs:
+  - job_name: "Nagios"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.211.238:9100','192.168.211.238:9091']
+      labels:
+        group: 'test-group'
+
+    # autosit
+  - job_name: "Autosit"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.114.23:9100','192.168.114.23:9091']
+      labels:
+        group: 'restserver-DC-DCS-newsdk-ycc-alerts'
+
+    - targets: ['192.168.114.24:9100','192.168.114.24:9091']
+      labels:
+        group: 'ysl-ytask-moneycenter-appscenter'
+
+    - targets: ['192.168.114.31:9100','192.168.114.31:9091']
+      labels:
+        group: 'dapgatherer'
+
+#Automation
+  - job_name: "Automation"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.114.67:9100','192.168.56.104:9100','192.168.114.3:9100','192.168.114.4:9100','192.168.112.72:9100','192.168.114.67:9091','192.168.56.104:9091','192.168.114.3:9091','192.168.114.4:9091','192.168.112.72:9091']
+      labels:
+        group: 'automation-rest'
+
+    - targets: ['192.168.114.27:9100','192.168.114.33:9100','192.168.114.27:9091','192.168.114.33:9091']
+      labels:
+        group: 'automation-gatherer'
+
+    - targets: ['192.168.114.207:9100','192.168.114.207:9091']
+      labels:
+        group: 'automation-moneycenter'
+
+# - targets: ['192.168.57.230:9100']
+#       labels:
+#         group: 'automation-mq'
+
+# MQ
+  - job_name: "MQ"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets  [192.168.56.230 WeeklyMRMQ]
+    - targets: ['192.168.57.230:9100','192.168.56.112:9100','192.168.57.99:9100','192.168.57.230:9091','192.168.56.112:9091','192.168.57.99:9091']
+      labels:
+        group: 'QAD_MQ'
+
+# Autonpr
+  - job_name: "Autonpr"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.211.31:9100','192.168.112.185:9100','192.168.114.46:9100','192.168.112.117:9100','192.168.211.31:9091','192.168.112.185:9091','192.168.114.46:9091','192.168.112.117:9091']
+      labels:
+        group: 'autonpr-rest-dc'
+
+    - targets: ['192.168.112.126:9100','192.168.113.219:9100','192.168.113.79:9100','192.168.56.240:9100','192.168.112.126:9091','192.168.113.219:9091','192.168.113.79:9091','192.168.56.240:9091']
+      labels:
+        group: 'autonpr-gatherer'
+
+    - targets: ['192.168.112.73:9100','192.168.210.219:9100','192.168.84.90:9100','192.168.112.72:9100','192.168.113.117:9100','192.168.112.73:9091','192.168.210.219:9091','192.168.84.90:9091','192.168.112.72:9091','192.168.113.117:9091']
+      labels:
+        group: 'autonpr-ysl'
+
+    - targets: ['192.168.211.9:9100','192.168.211.9:9091']
+      labels:
+        group: 'autonpr-wealth'
+
+    - targets: ['192.168.112.184:9100','192.168.112.184:9091']
+      labels:
+        group: 'autonpr-oauthclient'   
+
+    - targets: ['192.168.57.122:9100','192.168.57.122:9091']
+      labels:
+        group: 'autonpr-elasticsearch'
+       
+
+# Mainline
+  - job_name: "Mainline"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.107:9100','192.168.112.107:9091']
+      labels:
+        group: 'Mainline-dc-rest'
+
+    - targets: ['192.168.112.153:9100','192.168.112.153:9091']
+      labels:
+        group: 'newsdk-appcenter'
+
+    - targets: ['192.168.112.159:9100','192.168.57.135:9100','192.168.112.159:9091','192.168.57.135:9091']
+      labels:
+        group: 'newsdk-appcenter-rest'
+
+    - targets: ['192.168.112.171:9100','192.168.113.11:9100','192.168.57.136:9100','192.168.57.140:9100','192.168.112.171:9091','192.168.113.11:9091','192.168.57.136:9091','192.168.57.140:9091']
+      labels:
+        group: 'rest'
+
+    - targets: ['192.168.112.172:9100','192.168.113.182:9100','192.168.113.36:9100','192.168.114.25:9100','192.168.112.172:9091','192.168.113.182:9091','192.168.113.36:9091','192.168.114.25:9091']
+      labels:
+        group: 'ysl-rest-outhcount'
+
+    - targets: ['192.168.112.182:9100','192.168.113.74:9100','192.168.56.244:9100','192.168.112.182:9091','192.168.113.74:9091','192.168.56.244:9091']
+      labels:
+        group: 'gatherer'
+
+    - targets: ['192.168.210.232:9100','192.168.211.12:9100','192.168.56.108:9100','192.168.210.232:9091','192.168.211.12:9091','192.168.56.108:9091']
+      labels:
+        group: 'money'
+
+    - targets: ['192.168.210.96:9100','192.168.210.96:9091']
+      labels:
+        group: 'payitandpaymon'
+
+    - targets: ['192.168.211.84:9100','192.168.57.145:9100','192.168.211.84:9091','192.168.57.145:9091']
+      labels:
+        group: 'payitandpaymon-ytask-restserver-dc-dcs-alerts-newsdk-ycc-ubd'
+
+    - targets: ['192.168.56.160:9100','192.168.56.160:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.57.123:9100','192.168.57.123:9091']
+      labels:
+        group: 'money-rest'
+
+    - targets: ['192.168.57.177:9100','192.168.57.177:9091']
+      labels:
+        group: 'money-dc-dcs-alert-paymentengine-tcc-ubd'
+
+    - targets: ['192.168.57.85:9100','192.168.57.85:9091']
+      labels:
+        group: 'IBM MQ'
+
+# L1-feature-restart-wealth
+  - job_name: "L1-feature-restart-wealth"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.210.70:9100','192.168.210.70:9091']
+      labels:
+        group: 'newsdk-restserver'
+
+    - targets: ['192.168.56.164:9100','192.168.56.164:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.57.242:9100','192.168.57.242:9091']
+      labels:
+        group: 'DC-DCS'
+
+# L2 -release
+  - job_name: "L2-Release"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.108:9100','192.168.112.73:9100','192.168.56.192:9100','192.168.211.231:9100','192.168.211.231:9091','192.168.112.108:9091','192.168.112.73:9091','192.168.56.192:9091','192.168.211.231:9091']
+      labels:
+        group: 'restserver'
+
+    - targets: ['192.168.112.151:9100','192.168.112.151:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.112.184:9100','192.168.112.184:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.113.141:9100','192.168.113.141:9091']
+      labels:
+        group: 'ysl-restserver'
+
+    - targets: ['192.168.210.225:9100','192.168.210.225:9091']
+      labels:
+        group: 'appcenter'
+
+    - targets: ['192.168.210.231:9100','192.168.210.233:9100','192.168.210.47:9100','192.168.210.231:9091','192.168.210.233:9091','192.168.210.47:9091']
+      labels:
+        group: 'moneycenter'
+
+    - targets: ['192.168.211.87:9100','192.168.211.87:9091']
+      labels:
+        group: 'DC-alerts-oauthclient-appscenter-DCS-ytask-newsdk-ycc'
+
+    - targets: ['192.168.57.122:9100','192.168.57.122:9091']
+      labels:
+        group: 'moneycenter-restserver-appscenter-newsdk'
+
+
+# MR-Prodlike
+  - job_name: "MR-Prodlike"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.108:9100','192.168.112.108:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.112.150:9100','192.168.113.190:9100','192.168.112.150:9091','192.168.113.190:9091']  #192.168.56.245 not configured, its not conn
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.112.159:9100','192.168.112.159:9091']
+      labels:
+        group: 'restserver'
+
+    - targets: ['192.168.56.106:9100','192.168.56.106:9091']
+      labels:
+        group: 'alerts-ycc-restserver-DCS-moneycenter-newsdk-DC'
+
+# L3-environment
+  - job_name: "L3"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.178:9100','192.168.56.207:9100','192.168.56.15:9100','192.168.112.178:9091','192.168.56.207:9091','192.168.56.15:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.112.184:9100','192.168.112.223:9100','192.168.114.85:9100','192.168.112.184:9091','192.168.112.223:9091','192.168.114.85:9091']
+      labels:
+        group: 'restserver'
+    - targets: ['192.168.210.219:9100','192.168.210.219:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.210.39:9100','192.168.210.39:9091']
+      labels:
+        group: 'ycc-restserver-DCS-DC-alerts'
+
+    - targets: ['192.168.210.96:9100','192.168.210.96:9091']
+      labels:
+        group: 'ytask'
+
+    - targets: ['192.168.211.145:9100','192.168.211.145:9091']
+      labels:
+        group: 'newsdk'
+
+    - targets: ['192.168.57.241:9100','192.168.57.241:9091']
+      labels:
+        group: 'appscenter-restserver-moneycenter'
+
+    - targets: ['192.168.57.94:9100','192.168.57.94:9091']
+      labels:
+        group: 'payitollpaymon-UBD-paymentengine'
+
+    - targets: ['192.168.211.9:9100','192.168.56.233:9100','192.168.57.242:9100','192.168.211.9:9091','192.168.56.233:9091','192.168.57.242:9091']
+      labels:
+        group: 'moneycenter'
+
+#L1-feature-stable
+  - job_name: "L1-feature-stable"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.112.107:9100','192.168.112.107:9091']
+      labels:
+        group: 'DC'
+
+    - targets: ['192.168.112.159:9100','192.168.112.184:9100','192.168.112.159:9091','192.168.112.184:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.113.141:9100','192.168.113.141:9091']
+      labels:
+        group: 'restserver'
+
+    - targets: ['192.168.113.214:9100','192.168.113.214:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.211.52:9100','192.168.211.52:9091']
+      labels:
+        group: 'alerts-ytask-DC-restserver-DCS-newsdk-ycc'
+#infra
+  - job_name: "infra"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.112.107:9100','192.168.112.107:9091']
+      labels:
+        group: 'DCS-DC'
+
+    - targets: ['192.168.57.95:9100','192.168.57.95:9091']
+      labels:
+        group: 'ysl-alerts-ycc-ytask-restserver-newsdk'
+
+    - targets: ['192.168.114.85:9100','192.168.114.85:9091']
+      labels:
+        group: 'oauthclient'
+
+#Nextgen-fincheck
+  - job_name: "Nextgen-fincheck"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.112.254:9100','192.168.112.254:9091']
+      labels:
+        group: 'restserver-ysl'
+
+    - targets: ['192.168.113.117:9100','192.168.113.117:9091']
+      labels:
+        group: 'ycc'
+
+    - targets: ['192.168.113.91:9100','192.168.113.91:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.113.94:9100','192.168.113.94:9091']
+      labels:
+        group: 'dapgatherer'
+
+# L1-feature-restart
+  - job_name: "L1-feature-restart"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.164:9100','192.168.112.184:9100','192.168.112.164:9091','192.168.112.184:9091']
+      labels:
+        group: 'ysl-ycc'
+
+    - targets: ['192.168.112.166:9100','192.168.113.114:9100','192.168.113.218:9100','192.168.113.38:9100','192.168.112.166:9091','192.168.113.114:9091','192.168.113.218:9091','192.168.113.38:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.112.185:9100','192.168.113.84:9100','192.168.57.139:9100','192.168.114.22:9100','192.168.112.185:9091','192.168.113.84:9091','192.168.57.139:9091','192.168.114.22:9091']
+      labels:
+        group: 'restserver'
+
+    - targets: ['192.168.112.250:9100','192.168.112.250:9091']
+      labels:
+        group: 'yslycc-ngycc-wealthngycc-oauthclient'
+
+    - targets: ['192.168.113.117:9100','192.168.113.117:9091']
+      labels:
+        group: 'restserver-ysl-DCS'
+
+    - targets: ['192.168.113.184:9100','192.168.113.184:9091']
+      labels:
+        group: 'ysl-alerts-DC-DCS-restserver'
+
+    - targets: ['192.168.113.198:9100','192.168.113.198:9091']
+      labels:
+        group: 'ysl-restserver'
+
+    - targets: ['192.168.114.41:9100','192.168.210.107:9100','192.168.114.41:9091','192.168.210.107:9091']
+      labels:
+        group: 'ycc'
+
+    - targets: ['192.168.210.70:9100','192.168.210.70:9091']
+      labels:
+        group: 'alerts'
+
+    - targets: ['192.168.211.145:9100','192.168.211.145:9091']
+      labels:
+        group: 'moneycenter'
+
+    - targets: ['192.168.211.231:9100','192.168.211.231:9091','192.168.211.231:9091','192.168.211.231:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.56.157:9100','192.168.56.157:9091']
+      labels:
+        group: 'dag'
+
+#PVT1
+  - job_name: "PVT1"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.112.159:9100','192.168.112.159:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.210.107:9100','192.168.210.107:9091']
+      labels:
+        group: 'DC-DCS'
+
+    - targets: ['192.168.56.213:9100','192.168.56.213:9091']
+      labels:
+        group: 'restserver-newsdk'
+
+    - targets: ['192.168.56.56:9100','192.168.57.155:9100','192.168.56.56:9091','192.168.57.155:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.57.25:9100','192.168.57.25:9091']
+      labels:
+        group: 'alerts'
+
+#PVT2
+  - job_name: "PVT2"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.112.159:9100','192.168.112.159:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.211.127:9100','192.168.211.127:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.57.189:9100','192.168.57.189:9091']
+      labels:
+        group: 'DC-alerts-ycc-moneycenter-restserver-DCS-appscenter-newsdk'
+
+    - targets: ['192.168.114.85:9100','192.168.114.85:9091']
+      labels:
+        group: 'oauthclient'
+
+
+#PVT3
+  - job_name: "PVT3"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.112.184:9100','192.168.112.184:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.112.223:9100','192.168.112.223:9091']
+      labels:
+        group: 'DC-ycc-ytask-restserver-moneycenter-DCS-appscenter-newsdk'
+
+    - targets: ['192.168.112.224:9100','192.168.112.224:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.112.254:9100','192.168.112.254:9091']
+      labels:
+        group: 'DCS'
+
+#PVT4
+  - job_name: "PVT4"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    # Second group of scrape targets
+    - targets: ['192.168.113.228:9100','192.168.113.228:9091']
+      labels:
+        group: 'DC-ysl-alerts-restserver-DCS'
+
+    - targets: ['192.168.113.230:9100','192.168.113.230:9091']
+      labels:
+        group: 'dapgatherer'
+
+# MR-Weekly
+  - job_name: "MR-Weekly"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.171:9100','192.168.112.171:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.112.172:9100','192.168.112.172:9091']
+      labels:
+        group: 'restserver'
+
+    - targets: ['192.168.56.161:9100','192.168.56.161:9091']
+      labels:
+        group: 'newsdk'
+
+    - targets: ['192.168.56.244:9100','192.168.56.244:9091']
+      labels:
+        group: 'dapgatherer'
+
+    - targets: ['192.168.57.182:9100','192.168.57.182:9091']
+      labels:
+        group: 'paymentengine-ubd-ycc-newsdk-alerts-DC-DCS-appscenter-restserver-payitollpaymon'
+
+# MR-Stabilization
+  - job_name: "MR-Stabilization"
+    scrape_interval: 15s # Override the default global interval for this job
+    scrape_timeout: 15s # Override the default global timeout for this job
+    static_configs:
+    # First group of scrape targets
+    - targets: ['192.168.112.79:9100','192.168.112.79:9091']
+      labels:
+        group: 'restserver-moneycenter'
+
+    - targets: ['192.168.112.155:9100','192.168.112.172:9100','192.168.113.198:9100','192.168.56.164:9100','192.168.112.155:9091','192.168.112.172:9091','192.168.113.198:9091','192.168.56.164:9091']
+      labels:
+        group: 'restserver'
+
+    - targets: ['192.168.113.11:9100','192.168.56.161:9100','192.168.113.11:9091','192.168.56.161:9091']
+      labels:
+        group: 'ysl'
+
+    - targets: ['192.168.114.24:9100','192.168.114.24:9091']
+      labels:
+        group: 'oauth'
+
+    - targets: ['192.168.114.30:9100','192.168.211.118:9100','192.168.114.30:9091','192.168.211.118:9091']
+      labels:
+        group: 'dapgatherer'
+
+
+    - targets: ['192.168.210.247:9100','192.168.211.37:9100','192.168.57.136:9100','192.168.56.20:9100','192.168.56.157:9100','192.168.210.247:9091','192.168.211.37:9091','192.168.57.136:9091','192.168.56.20:9091','192.168.56.157:9091']
+      labels:
+        group: 'moneycenter'
+
+    - targets: ['192.168.211.133:9100','192.168.211.133:9091']
+      labels:
+        group: 'DC-paymentengine-alerts'
+
+    - targets: ['192.168.211.88:9100','192.168.211.88:9091']
+      labels:
+        group: 'ubd-DCS-ytask-DC-ycc-payitollpaymon'
+
+    - targets: ['192.168.56.192:9100','192.168.56.192:9091']
+      labels:
+        group: 'newsdk'
+
+    - targets: ['192.168.57.123:9100','192.168.57.123:9091']
+      labels:
+        group: 'appscenter-restserver-newsdk-moneycenter'
+    
+    - targets: ['192.168.112.90:9100','192.168.57.112:9091']
+      labels:
+        group: 'ngyccservcices'

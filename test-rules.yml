@@ -1,0 +1,14 @@
+groups:
+ - name: example
+   rules:
+   - alert: CPU_USAGE_HIGH
+     expr: rate(node_cpu_seconds_total{cpu="0",mode="user"}[30s]) * 100 > 90
+     for: 1m
+     annotations:
+       description: "CPU Usage is high"
+   - alert: RAM_USAGE_HIGH
+     expr: (node_memory_MemTotal_bytes - node_memory_MemFree_bytes)/node_memory_MemTotal_bytes*100 > 95
+     for: 1m
+     annotations:
+       descrpition: "Ram Consumption is more the 90%"
+

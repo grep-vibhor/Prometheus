@@ -1,0 +1,23 @@
+global:
+# The root route on which each incoming alert enters.
+route:
+  # default route if none match
+  receiver: web
+
+  # The labels by which incoming alerts are grouped together. For example,
+  # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
+  # be batched into a single group.
+  # TODO:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 1m
+  # All the above attributes are inherited by all child routes and can
+  # overwritten on each.
+  # If an alert has successfully been sent, wait 'repeat_interval' to
+  # resend them.
+
+receivers:
+- name: web
+  webhook_configs:
+  - send_resolved: false
+    url: http://192.168.211.238:2605/clean
